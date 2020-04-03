@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SalesSystem.Models.Gown>
+﻿@model SalesSystem.Views.Gowns.IndexFilterModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,56 +9,69 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Gowns" asp-action="Index" method="get">
+    <p>
+        OR # or Name: <input type="text" name="query">
+        <select asp-for="status" asp-items="Model.statusOptions">
+        </select>
+        <input type="submit" value="Filter" />
+    </p>
+
+</form>
+
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                @Html.DisplayNameFor(model => model.gown.name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.description)
+                @Html.DisplayNameFor(model => model.gown.description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.price)
+                @Html.DisplayNameFor(model => model.gown.price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.status)
+                @Html.DisplayNameFor(model => model.gown.status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dateRented)
+                @Html.DisplayNameFor(model => model.gown.dateRented)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dueDate)
+                @Html.DisplayNameFor(model => model.gown.dueDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dateReturned)
+                @Html.DisplayNameFor(model => model.gown.dateReturned)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.pickupDate)
+                @Html.DisplayNameFor(model => model.gown.pickupDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.contact)
+                @Html.DisplayNameFor(model => model.gown.contact)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.orNumber)
+                @Html.DisplayNameFor(model => model.gown.orNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.address)
+                @Html.DisplayNameFor(model => model.gown.address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.partialPayment)
+                @Html.DisplayNameFor(model => model.gown.partialPayment)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.balance)
+                @Html.DisplayNameFor(model => model.gown.balance)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.securityDeposit)
+                @Html.DisplayNameFor(model => model.gown.securityDeposit)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.gowns) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.name)

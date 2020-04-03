@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SalesSystem.Data;
+using SalesSystem.Enumerations;
 using SalesSystem.Models;
+using SalesSystem.Views.Gowns;
 
 namespace SalesSystem.Controllers
 {
@@ -20,9 +22,24 @@ namespace SalesSystem.Controllers
         }
 
         // GET: Gowns
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string query, string status)
         {
-            return View(await _context.Gowns.ToListAsync());
+            var gowns = from g in _context.Gowns
+                        select g;
+            if (!String.IsNullOrEmpty(query))
+            {
+                gowns = gowns.Where(g => g.orNumber.Contains(query) || g.name.Contains(query));
+            }
+
+            if (!String.IsNullOrEmpty(status))
+            {
+                gowns = gowns.Where(g => g.status.Equals(status));
+            }
+            IndexFilterModel model = new IndexFilterModel();
+            var dog = await gowns.ToListAsync();
+            model.gowns = dog;
+            model.statusOptions = new SelectList(Enum.GetNames(typeof(Status)).ToList());
+            return View(model);
         }
 
         // GET: Gowns/Details/5
